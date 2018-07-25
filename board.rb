@@ -50,7 +50,7 @@ class Board
       raise 'Invalid move'
     elsif !piece.valid_moves.include?(end_pos)
       raise 'Move puts you in check'
-    end_pos
+    end
 
     move_piece!(start_pos, end_pos)
   end
@@ -67,8 +67,8 @@ class Board
   end
 
   def checked?(color)
-    king_pos = find_king(color).pos
-    pieces.any? { |piece| piece.color != color && piece.moves.include?(king_pos)}
+    king_position = find_king(color).position
+    pieces.any? { |piece| piece.color != color && piece.moves.include?(king_position)}
   end
 
   def checkmate?(color)
@@ -135,7 +135,7 @@ class Board
   def make_starting_grid(board_filled)
     @rows = Array.new(8) { Array.new(8, sentinel) }
     return unless board_filled
-    [white, black].each do |color|
+    [:white, :black].each do |color|
       fill_back(color)
       fill_pawns(color)
     end
