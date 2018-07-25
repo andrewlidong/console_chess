@@ -1,9 +1,10 @@
 require "colorize"
 require_relative "cursor"
+require "byebug"
 
 class Display
 
-  attr_reader :board, :notifications, :cursor
+  attr_reader :board, :cursor, :notifications
 
   def initialize(board)
     @board = board
@@ -11,7 +12,7 @@ class Display
     @notifications = {}
   end
 
-  def build_grid
+  def build_board
     @board.rows.map.with_index do |row, i|
       build_row(row, i)
     end
@@ -41,11 +42,11 @@ class Display
     @notifications.delete(:error)
   end
 
-  def uncheck!
+  def remove_check!
     @notifications.delete(:check)
   end
 
-  def set_check!
+  def add_check!
     @notifications[:check] = "Check!"
   end
 
@@ -57,7 +58,7 @@ class Display
     puts "Hit the spacebar or enter to confirm a selection."
     puts "\n"
 
-    build_grid.each { |row| puts row.join }
+    build_board.each { |row| puts row.join }
 
     @notifications.each do |_key, val|
       puts val

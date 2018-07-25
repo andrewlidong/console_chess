@@ -1,8 +1,8 @@
-module Stepable
+module SteppingPiece
   def moves
-    move_diffs.each_with_object([]) do |(dx, dy), moves|
-      cur_x, cur_y = pos
-      pos = [cur_x + dx, cur_y + dy]
+    move_differences.each_with_object([]) do |(dx, dy), moves|
+      current_x, current_y = pos
+      pos = [current_x + dx, current_y + dy]
 
       next unless board.valid_pos?(pos)
 
@@ -16,8 +16,8 @@ module Stepable
 
   private
 
-  def move_diffs
-    # subclass implements this
+  def move_differences
+    # subclass implements
     raise NotImplementedError
   end
 end

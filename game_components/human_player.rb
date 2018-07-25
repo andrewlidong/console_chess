@@ -3,11 +3,12 @@ require_relative 'player'
 
 class HumanPlayer < Player
 
-  def make_move(_board)
+  def play_move(_board)
     start_pos = nil
     end_pos = nil
 
     until start_pos && end_pos
+
       display.render
 
       if start_pos
@@ -25,7 +26,7 @@ class HumanPlayer < Player
       end
     end
 
-    [start_pos, end_pos]
+    return [start_pos, end_pos]
   end
 
 end

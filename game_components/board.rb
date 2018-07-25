@@ -30,14 +30,15 @@ class Board
   end
 
   def pieces
-    @rows.flatten.reject(&:empty?)
+    @rows.flatten.reject{ |pos| pos.empty?}
+    # (&:empty?)
   end
 
   def add_piece(piece, pos)
     if empty?(pos)
       self[pos] = piece
     else
-      raise 'Position not empty'
+      raise 'Position is occupied'
     end
   end
 
@@ -48,65 +49,83 @@ class Board
   end
 
   def valid_pos?(pos)
-    pos.all? { |coord| coord.between?(0, 7) }
+    pos.all? { |coordinates| coordinates.between?(0, 7) }
   end
 
   def move_piece(turn_color, start_pos, end_pos)
-    raise 'That position is empty' if empty?(start_pos)
 
-    piece = self[start_pos]
-    if piece.color != turn_color
-      raise 'Please select your own piece'
-    elsif !piece.moves.include?(end_pos)
-      raise 'That piece cant move like that'
-    elsif !piece.valid_moves.include?(end_pos)
-      raise 'That move puts you in check'
+    if empty?(start_pos)
+      raise 'That position is empty'
+    else
+      piece = self[start_pos]
+      if piece.color != turn_color
+        raise 'Please select your own piece'
+      elsif !piece.moves.include?(end_pos)
+        raise 'That piece cant move like that'
+      elsif !piece.valid_moves.include?(end_pos)
+        raise 'That move puts you in check'
+      end
+
+      move_piece!(start_pos, end_pos)
     end
 
-    move_piece!(start_pos, end_pos)
   end
 
   def move_piece!(start_pos, end_pos)
+
     piece = self[start_pos]
-    raise 'That piece cant move like that' unless piece.moves.include?(end_pos)
 
-    self[end_pos] = piece
-    self[start_pos] = sentinel
-    piece.pos = end_pos
+    if piece.moves.include?(end_pos)
+      self[end_pos] = piece
+      self[start_pos] = sentinel
+      piece.pos = end_pos
 
-    nil
+      return nil
+    else
+      raise 'That piece cant move like that'
+    end
+
   end
-
 
   # checks
 
-  def in_check?(color)
+  def checked?(color)
+
     king_pos = find_king(color).pos
-    pieces.any? do |p|
-      p.color != color && p.moves.include?(king_pos)
+
+    pieces.any? do |piece|
+      piece.color != color && piece.moves.include?(king_pos)
     end
+
   end
 
   def checkmate?(color)
-    return false unless in_check?(color)
 
-    pieces.select { |p| p.color == color }.all? do |piece|
-      piece.valid_moves.empty?
+    if checked?(color)
+      pieces.select { |piece| piece.color == color }.all? do |piece|
+        piece.valid_moves.empty?
+      end
+    else
+      return false unless checked?(color)
     end
+
   end
 
   def dup
-    new_board = Board.new(false)
+
+    dup_board = Board.new(false)
 
     pieces.each do |piece|
-      piece.class.new(piece.color, new_board, piece.pos)
+      piece.class.new(piece.color, dup_board, piece.pos)
     end
 
-    new_board
+    dup_board
+
   end
 
 
   private
+
 
   attr_reader :sentinel
 
@@ -123,29 +142,43 @@ class Board
     ]
 
 
-    i = color == :white ? 7 : 0
+    if color == :white
+      i = 7
+    else
+      i = 0
+    end
 
     back_pieces.each_with_index do |piece_class, j|
       piece_class.new(color, self, [i, j])
     end
+
   end
 
   def fill_pawns(color)
 
-    i = color == :white ? 6 : 1
+    if color == :white
+      i = 6
+    else
+      i = 1
+    end
 
     8.times { |j| Pawn.new(color, self, [i, j]) }
   end
 
   def find_king(color)
-    king_pos = pieces.find { |p| p.color == color && p.is_a?(King) }
-    king_pos || (raise 'king not found?')
+
+    king_pos = pieces.find { |piece| piece.color == color && piece.is_a?(King) }
+
+    king_pos || (raise 'King is Missing')
+
   end
 
   def populate_board(board_filled)
+
     @rows = Array.new(8) { Array.new(8, sentinel) }
+
     return unless board_filled
-    %i(white black).each do |color|
+    [:white, :black].each do |color|
       fill_back(color)
       fill_pawns(color)
     end

@@ -1,8 +1,8 @@
 require_relative 'piece'
-require_relative 'movement/slideable'
+require_relative 'movement/sliding_piece'
 
 class Bishop < Piece
-  include Slideable
+  include SlidingPiece
 
   def symbol
     '♝'.colorize(color)

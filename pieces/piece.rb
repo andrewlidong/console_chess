@@ -3,10 +3,12 @@ class Piece
   attr_accessor :pos
 
   def initialize(color, board, pos)
-    raise 'invalid color' unless %i(white black).include?(color)
-    raise 'invalid pos' unless board.valid_pos?(pos)
+    @color = color
+    @board = board
+    @pos = pos
 
-    @color, @board, @pos = color, board, pos
+    raise 'Invalid Color' unless [:white, :black].include?(color)
+    raise 'Invalid Position' unless board.valid_pos?(pos)
 
     board.add_piece(self, pos)
   end
@@ -16,11 +18,15 @@ class Piece
   end
 
   def empty?
-    self.is_a?(NullPiece) ? true : false
+    if self.is_a?(NullPiece)
+      return true
+    else
+      return false
+    end
   end
 
   def symbol
-    # subclass implements this with unicode chess char
+    # subclass this with unicode character
     raise NotImplementedError
   end
 
@@ -31,8 +37,9 @@ class Piece
   private
 
   def move_into_check?(end_pos)
-    test_board = board.dup
-    test_board.move_piece!(pos, end_pos)
-    test_board.in_check?(color)
+    duped_board = board.dup
+    duped_board.move_piece!(pos, end_pos)
+    duped_board.checked?(color)
   end
+
 end

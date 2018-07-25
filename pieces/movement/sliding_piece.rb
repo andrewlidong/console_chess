@@ -1,12 +1,12 @@
-module Slideable
-  HORIZONTAL_DIRS = [
+module SlidingPiece
+  HORIZONTAL_DIRECTIONS = [
     [-1, 0],
     [0, -1],
     [0, 1],
     [1, 0]
   ].freeze
 
-  DIAGONAL_DIRS = [
+  DIAGONAL_DIRECTIONS = [
     [-1, -1],
     [-1, 1],
     [1, -1],
@@ -14,11 +14,11 @@ module Slideable
   ].freeze
 
   def horizontal_directions
-    HORIZONTAL_DIRS
+    HORIZONTAL_DIRECTIONS
   end
 
   def diagonal_directions
-    DIAGONAL_DIRS
+    DIAGONAL_DIRECTIONS
   end
 
   def moves
@@ -34,26 +34,28 @@ module Slideable
   private
 
   def move_directions
-    # subclass implements this
+    # subclass implements
     raise NotImplementedError
   end
 
   def grow_unblocked_moves_in_dir(dx, dy)
-    cur_x, cur_y = pos
+
+    current_x, current_y = pos
     moves = []
+
     loop do
-      cur_x, cur_y = cur_x + dx, cur_y + dy
-      pos = [cur_x, cur_y]
+      current_x, current_y = current_x + dx, current_y + dy
+      pos = [current_x, current_y]
 
       break unless board.valid_pos?(pos)
 
       if board.empty?(pos)
         moves << pos
       else
-        # can take an opponent's piece
+        # capture an opponent
         moves << pos if board[pos].color != color
 
-        # can't move past blocking piece
+        # can't move past blocker
         break
       end
     end
