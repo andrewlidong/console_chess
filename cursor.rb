@@ -31,6 +31,7 @@ MOVES = {
 }.freeze
 
 class Cursor
+
   attr_reader :cursor_pos, :board, :selected
 
   def initialize(cursor_pos, board)
@@ -59,7 +60,7 @@ class Cursor
       cursor_pos
     when :left, :right, :up, :down
       update_pos(MOVES[key])
-      return nil
+      nil
     else
       puts key
     end
@@ -70,7 +71,7 @@ class Cursor
     STDIN.raw!
 
     input = STDIN.getc.chr
-    if input =="\e"
+    if input == "\e"
       input << STDIN.read_nonblock(3) rescue nil
       input << STDIN.read_nonblock(2) rescue nil
     end
@@ -83,6 +84,6 @@ class Cursor
 
   def update_pos(diff)
     new_pos = [cursor_pos[0] + diff[0], cursor_pos[1] + diff[1]]
-    @cursor_pos = new_pos if board.valid_position?(new_pos)
+    @cursor_pos = new_pos if board.valid_pos?(new_pos)
   end
 end

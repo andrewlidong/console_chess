@@ -5,5 +5,4 @@ class Player
     @color = color
     @display = display
   end
-
 end

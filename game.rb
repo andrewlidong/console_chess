@@ -20,8 +20,8 @@ class Game
         start_pos, end_pos = players[current_player].make_move(board)
         board.move_piece(current_player, start_pos, end_pos)
 
-        next_turn!
-        notify_checked
+        swap_turn!
+        notify_players
       rescue StandardError => e
         @display.notifications[:error] = e.message
         retry
@@ -29,22 +29,22 @@ class Game
     end
 
     display.render
-    puts "#{current_player} has been mated"
+    puts "#{current_player} is checkmated."
 
     nil
   end
 
   private
 
-  def notify_checked
-    if board.checked?(current_player)
+  def notify_players
+    if board.in_check?(current_player)
       display.set_check!
     else
-      display.remove_check!
+      display.uncheck!
     end
   end
 
-  def next_turn!
+  def swap_turn!
     @current_player = current_player == :white ? :black : :white
   end
 end

@@ -1,20 +1,18 @@
 class Piece
   attr_reader :board, :color
-  attr_accessor :position
+  attr_accessor :pos
 
-  def initialize(color, board, position)
-    @color = color
-    @board = board
-    @position = position
+  def initialize(color, board, pos)
+    raise 'invalid color' unless %i(white black).include?(color)
+    raise 'invalid pos' unless board.valid_pos?(pos)
 
-    raise 'invalid color' unless [:white, :black].include?(color)
-    raise 'invalid position' unless board.valid_position?(position)
+    @color, @board, @pos = color, board, pos
 
-    board.add_piece(self, position)
+    board.add_piece(self, pos)
   end
 
   def to_s
-    " #{symbol}"
+    " #{symbol} "
   end
 
   def empty?
@@ -22,19 +20,19 @@ class Piece
   end
 
   def symbol
+    # subclass implements this with unicode chess char
     raise NotImplementedError
   end
 
   def valid_moves
-    moves.reject { |end_pos| moves_into_check?(end_pos) }
+    moves.reject { |end_pos| move_into_check?(end_pos) }
   end
 
   private
 
-  def moves_into_check?(end_pos)
-    dup_board = board.dup
-    dup_board.move_piece!(pos, end_pos)
-    dup_board.checked?(color)
+  def move_into_check?(end_pos)
+    test_board = board.dup
+    test_board.move_piece!(pos, end_pos)
+    test_board.in_check?(color)
   end
-
 end

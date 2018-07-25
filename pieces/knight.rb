@@ -4,13 +4,13 @@ require_relative 'stepable'
 class Knight < Piece
   include Stepable
 
-  def sybol
+  def symbol
     '♞'.colorize(color)
   end
 
   protected
 
-  def move_differences
+  def move_diffs
     [[-2, -1],
      [-1, -2],
      [-2, 1],

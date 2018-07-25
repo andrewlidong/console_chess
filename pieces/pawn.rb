@@ -13,40 +13,35 @@ class Pawn < Piece
   private
 
   def at_start_row?
-    position[0] == (color == :white) ? 6 : 1
+    pos[0] == (color == :white) ? 6 : 1
   end
 
-  def forward_direction
+  def forward_dir
     color == :white ? -1 : 1
   end
 
   def forward_steps
-    i, j = position
-
-    one_step = [i + forward_direction, j]
-
-    return [] unless board.valid_position?(one_step) && board.empty?(one_step)
+    i, j = pos
+    one_step = [i + forward_dir, j]
+    return [] unless board.valid_pos?(one_step) && board.empty?(one_step)
 
     steps = [one_step]
-
-    two_step = [i + 2 * forward_direction, j]
-
+    two_step = [i + 2 * forward_dir, j]
     steps << two_step if at_start_row? && board.empty?(two_step)
-
     steps
   end
 
   def side_attacks
-    i, j = position
+    i, j = pos
 
-    side_moves = [[i + forward_direction, j - 1], [i + forward_direction, j + 1]]
+    side_moves = [[i + forward_dir, j - 1], [i + forward_dir, j + 1]]
 
-    side_moves.select do |new_position|
-      next false unless board.valid_position?(new_position)
-      next false if board.empty?(new_position)
+    side_moves.select do |new_pos|
+      next false unless board.valid_pos?(new_pos)
+      next false if board.empty?(new_pos)
 
-      opponent_piece = board[new_position]
-      opponent_piece && opponent_piece.color != color
+      threatened_piece = board[new_pos]
+      threatened_piece && threatened_piece.color != color
     end
   end
 end

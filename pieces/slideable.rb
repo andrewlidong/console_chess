@@ -1,32 +1,31 @@
 module Slideable
-  HORIZONTAL_DIRECTIONS = [
+  HORIZONTAL_DIRS = [
     [-1, 0],
     [0, -1],
     [0, 1],
     [1, 0]
   ].freeze
 
-  DIAGONAL_DIRECTIONS = [
+  DIAGONAL_DIRS = [
     [-1, -1],
     [-1, 1],
     [1, -1],
     [1, 1]
   ].freeze
 
-
-  def horizontal_directions
-    HORIZONTAL_DIRECTIONS
+  def horizontal_dirs
+    HORIZONTAL_DIRS
   end
 
-  def diagonal_directions
-    DIAGONAL_DIRECTIONS
+  def diagonal_dirs
+    DIAGONAL_DIRS
   end
 
   def moves
     moves = []
 
-    move_directions.each do |dx, dy|
-      moves.concat(grow_unblocked_moves_in_direction(dx, dy))
+    move_dirs.each do |dx, dy|
+      moves.concat(grow_unblocked_moves_in_dir(dx, dy))
     end
 
     moves
@@ -34,30 +33,30 @@ module Slideable
 
   private
 
-  def move_directions
+  def move_dirs
+    # subclass implements this
     raise NotImplementedError
   end
 
-  def grow_unblocked_moves_in_direction(dx, dy)
-    current_x, current_y = position
+  def grow_unblocked_moves_in_dir(dx, dy)
+    cur_x, cur_y = pos
     moves = []
-
     loop do
-      current_x = current_x + dx
-      current_y = current_y + dy
+      cur_x, cur_y = cur_x + dx, cur_y + dy
+      pos = [cur_x, cur_y]
 
-      position = [current_x, current_y]
+      break unless board.valid_pos?(pos)
 
-      break unless board.valid_position?(position)
-
-      if board.empty?(position)
-        moves << position
+      if board.empty?(pos)
+        moves << pos
       else
-        moves << position if board[position].color != color
+        # can take an opponent's piece
+        moves << pos if board[pos].color != color
+
+        # can't move past blocking piece
         break
       end
     end
-
     moves
   end
 end
