@@ -26,18 +26,18 @@ class Display
 
   def colors_for(i, j)
     if cursor.cursor_pos == [i, j] && cursor.selected
-      bg = :green
+      background = :green
     elsif cursor.cursor_pos == [i, j]
-      bg = :light_green
+      background = :light_green
     elsif (i + j).odd?
-      bg = :light_red
+      background = :light_red
     elsif (i + j).even?
-      bg = :light_blue
+      background = :yellow
     end
-    { background: bg }
+    { background: background }
   end
 
-  def reset!
+  def reset_notifications!
     @notifications.delete(:error)
   end
 

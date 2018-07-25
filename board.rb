@@ -3,9 +3,9 @@ require_relative 'pieces'
 class Board
   attr_reader :rows
 
-  def initialize(fill_board = true)
+  def initialize(board_filled = true)
     @sentinel = NullPiece.instance
-    make_starting_grid(fill_board)
+    make_starting_grid(board_filled)
   end
 
   def [](pos)
@@ -98,7 +98,14 @@ class Board
 
   def fill_back_row(color)
     back_pieces = [
-      Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
+      Rook,
+      Knight,
+      Bishop,
+      Queen,
+      King,
+      Bishop, 
+      Knight,
+      Rook
     ]
 
     i = color == :white ? 7 : 0
@@ -117,9 +124,9 @@ class Board
     king_pos || (raise 'king not found?')
   end
 
-  def make_starting_grid(fill_board)
+  def make_starting_grid(board_filled)
     @rows = Array.new(8) { Array.new(8, sentinel) }
-    return unless fill_board
+    return unless board_filled
     %i(white black).each do |color|
       fill_back_row(color)
       fill_pawns_row(color)

@@ -1,5 +1,5 @@
 require_relative 'piece'
-require_relative 'stepable'
+require_relative 'movement/stepable'
 
 class King < Piece
   include Stepable
