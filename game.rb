@@ -1,5 +1,5 @@
-require_relative 'board'
-require_relative 'human_player'
+require_relative './game_components/board'
+require_relative './game_components/human_player'
 
 class Game
   attr_reader :board, :display, :current_player, :players

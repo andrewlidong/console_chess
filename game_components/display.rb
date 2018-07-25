@@ -51,7 +51,12 @@ class Display
 
   def render
     system("clear")
-    puts "Arrow keys, WASD, or vim to move, space or enter to confirm."
+
+    puts "Welcome to American Chess."
+    puts "Use arrow keys or WASD to move the cursor."
+    puts "Hit the spacebar or enter to confirm a selection."
+    puts "\n"
+
     build_grid.each { |row| puts row.join }
 
     @notifications.each do |_key, val|

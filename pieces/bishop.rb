@@ -10,7 +10,7 @@ class Bishop < Piece
 
   protected
 
-  def move_dirs
-    diagonal_dirs
+  def move_directions
+    diagonal_directions
   end
 end

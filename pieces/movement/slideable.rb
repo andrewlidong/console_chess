@@ -13,18 +13,18 @@ module Slideable
     [1, 1]
   ].freeze
 
-  def horizontal_dirs
+  def horizontal_directions
     HORIZONTAL_DIRS
   end
 
-  def diagonal_dirs
+  def diagonal_directions
     DIAGONAL_DIRS
   end
 
   def moves
     moves = []
 
-    move_dirs.each do |dx, dy|
+    move_directions.each do |dx, dy|
       moves.concat(grow_unblocked_moves_in_dir(dx, dy))
     end
 
@@ -33,7 +33,7 @@ module Slideable
 
   private
 
-  def move_dirs
+  def move_directions
     # subclass implements this
     raise NotImplementedError
   end
