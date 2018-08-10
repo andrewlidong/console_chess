@@ -53,7 +53,7 @@ class Display
   def render
     system("clear")
 
-    puts "Welcome to American Chess."
+    puts "Welcome to Western Console Chess."
     puts "Use arrow keys or WASD to move the cursor."
     puts "Hit the spacebar or enter to confirm a selection."
     puts "\n"

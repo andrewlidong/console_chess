@@ -3,7 +3,8 @@ require_relative 'piece'
 class Pawn < Piece
 
   def symbol
-    '♟'.colorize(color)
+    "\xe2\x99\x9f".colorize(color)
+    # '♟'.colorize(color)
   end
 
   def moves
@@ -59,7 +60,7 @@ class Pawn < Piece
       next false if board.empty?(new_pos)
 
       threatened_piece = board[new_pos]
-      
+
       threatened_piece && threatened_piece.color != color
     end
   end

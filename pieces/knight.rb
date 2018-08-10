@@ -5,7 +5,8 @@ class Knight < Piece
   include SteppingPiece
 
   def symbol
-    '♞'.colorize(color)
+    "\xe2\x99\x9e".colorize(color)
+    # '♞'.colorize(color)
   end
 
   protected

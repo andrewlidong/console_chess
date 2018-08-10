@@ -5,7 +5,8 @@ class Queen < Piece
   include SlidingPiece
 
   def symbol
-    '♛'.colorize(color)
+    "\xe2\x99\x9b".colorize(color)
+    # '♛'.colorize(color)
   end
 
   protected

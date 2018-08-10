@@ -5,7 +5,8 @@ class King < Piece
   include SteppingPiece
 
   def symbol
-    '♚'.colorize(color)
+    "\xe2\x99\x9a".colorize(color)
+    # '♚'.colorize(color)
   end
 
   protected

@@ -5,7 +5,8 @@ class Bishop < Piece
   include SlidingPiece
 
   def symbol
-    '♝'.colorize(color)
+    "\xe2\x99\x9d".colorize(color)
+    # '♝'.colorize(color)
   end
 
   protected
