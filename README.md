@@ -6,7 +6,7 @@ To play, clone this repo, navigate to the project folder and enter <code>ruby ga
 
 ## Demo
 
-<img src="http://www.giphy.com/gifs/1gWiIQyOre3CPzKYit" height="400" alt="gameplay-gif">
+<img src="https://media.giphy.com/media/1gWiIQyOre3CPzKYit/giphy.gif" height="400" alt="gameplay-gif">
 
 ## Highlights
 
