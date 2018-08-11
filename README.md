@@ -19,6 +19,9 @@ An instance of Object-Oriented Programming - all pieces inherit from a Piece cla
 To check whether a move puts a player in check, the game makes a deep dup of the board with all positions, performs the move and checks the result.  
 
 ```
+  // from piece.rb
+
+
   def move_into_check?(end_pos)
     duped_board = board.dup
     duped_board.move_piece!(pos, end_pos)
@@ -27,6 +30,8 @@ To check whether a move puts a player in check, the game makes a deep dup of the
 ```
 
 ```
+  // from board.rb
+
   def dup
 
     dup_board = Board.new(false)
@@ -45,6 +50,8 @@ To check whether a move puts a player in check, the game makes a deep dup of the
 Navigate the game with simple keypad commands.  
 
 ```
+  // from cursor.rb
+
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
