@@ -33,7 +33,7 @@ An instance of Object-Oriented Programming - all pieces inherit from a Piece cla
 
 To check whether a move puts a player in check, the game makes a deep dup of the board with all positions, performs the move and checks the result.  
 
-```
+```ruby
   // from piece.rb
 
   def move_into_check?(end_pos)
@@ -43,7 +43,7 @@ To check whether a move puts a player in check, the game makes a deep dup of the
   end
 ```
 
-```
+```ruby
   // from board.rb
 
   def dup
@@ -63,7 +63,7 @@ To check whether a move puts a player in check, the game makes a deep dup of the
 
 Navigate the game with simple keypad commands.  
 
-```
+```ruby
   // from cursor.rb
 
   def get_input
@@ -72,7 +72,7 @@ Navigate the game with simple keypad commands.
   end
 ```
 
-```
+```ruby
   def handle_key(key)
     case key
     when :ctrl_c
@@ -89,7 +89,7 @@ Navigate the game with simple keypad commands.
   end
 ```
 
-```
+```ruby
   def read_char
     STDIN.echo = false
     STDIN.raw!
