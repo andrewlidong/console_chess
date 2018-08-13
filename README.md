@@ -27,7 +27,7 @@ Some technical highlights of the app are:
 
 ### Sliding Piece and Stepping Piece Inheritance
 
-An instance of Object-Oriented Programming - all pieces inherit from a Piece class.  The Bishop, Rook and Queen inherit from the SlidingPiece module for multi-tile movement, while the Knight and King inherit from the SteppingPiece module.  
+An instance of Object-Oriented Programming - all pieces inherit from a `Piece` class.  The `Bishop`, `Rook` and `Queen` inherit from the `SlidingPiece` module for multi-tile movement, while the `Knight` and `King` inherit from the `SteppingPiece` module.  
 
 ### Deep Board Duplication
 
