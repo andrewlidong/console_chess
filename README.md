@@ -1,4 +1,4 @@
-# Western Console Chess
+# Console Chess
 
 ## About
 
